@@ -2,13 +2,13 @@ const http = require('http');
 const fs = require('fs');
 const multer = require('multer');
 
-// Set up Multer storage configuration
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './uploads'); // Destination folder for uploaded files
+        cb(null, './uploads');
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname); // Use the original file name
+        cb(null, file.originalname);
     }
 });
 
@@ -41,7 +41,6 @@ const server = http.createServer((req, res) => {
             res.end('File created and text written successfully');
         });
     } else if (req.url === '/upload' && req.method === 'POST') {
-        // Handle file upload
         upload.single('file')(req, res, (err) => {
             if (err) {
                 console.error('Error uploading file:', err);
