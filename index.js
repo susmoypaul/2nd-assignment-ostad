@@ -2,7 +2,17 @@ const http = require('http');
 const fs = require('fs');
 const multer = require('multer');
 
-const upload = multer({ dest: './uploads' });
+// Set up Multer storage configuration
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads'); // Destination folder for uploaded files
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname); // Use the original file name
+    }
+});
+
+const upload = multer({ storage: storage });
 
 const server = http.createServer((req, res) => {
     if (req.url === '/') {
